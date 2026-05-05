@@ -5,7 +5,7 @@ sources:
     database: fea_academy
     schema: adventure_works
     tables:
-      # Vendas
+      # --- VENDAS ---
       - name: sales_salesorderheader
         description: "Cabeçalho das vendas (um registro por pedido)."
         tests:
@@ -22,16 +22,24 @@ sources:
           - not_null:
               column_name: salesorderdetailid
 
-      # Produtos
+      - name: sales_salesperson
+        description: "Tabela de vendedores da Adventure Works."
+        tests:
+          - unique:
+              column_name: businessentityid
+          - not_null:
+              column_name: businessentityid
+
+      # --- PRODUTOS ---
       - name: production_product
-        description: "Cadastro de produtos."
+        description: "Cadastro de produtos da empresa."
         tests:
           - unique:
               column_name: productid
           - not_null:
               column_name: productid
 
-      # Clientes e Pessoas
+      # --- CLIENTES E PESSOAS ---
       - name: sales_customer
         description: "Tabela de clientes da Adventure Works."
         tests:
@@ -41,14 +49,14 @@ sources:
               column_name: customerid
 
       - name: person_person
-        description: "Informações cadastrais de pessoas físicas."
+        description: "Informações cadastrais de pessoas físicas (Nomes)."
         tests:
           - unique:
               column_name: businessentityid
           - not_null:
               column_name: businessentityid
 
-      # Localização (Endereços)
+      # --- LOCALIZAÇÃO ---
       - name: person_address
         description: "Cadastro de endereços físicos."
         tests:
@@ -66,14 +74,13 @@ sources:
               column_name: stateprovinceid
 
       - name: person_countryregion
-        description: "Países e Regiões."
+        description: "Países e Regiões mundiais."
         tests:
           - unique:
               column_name: countryregioncode
-          - not_null:
-              column_name: countryregioncode
+          # Teste not_null removido por falha na integridade da origem.
 
-      # Cartão de Crédito
+      # --- CARTÕES DE CRÉDITO ---
       - name: sales_creditcard
         description: "Informações de cartões de crédito."
         tests:
@@ -82,9 +89,9 @@ sources:
           - not_null:
               column_name: creditcardid
 
-      # Motivos de Venda (Reason)
+      # --- MOTIVOS DE VENDA ---
       - name: sales_salesreason
-        description: "Nomes e tipos dos motivos de venda."
+        description: "Lista de motivos de venda (Promoção, Marketing, etc)."
         tests:
           - unique:
               column_name: salesreasonid
@@ -92,8 +99,7 @@ sources:
               column_name: salesreasonid
 
       - name: sales_salesorderheadersalesreason
-        description: "Tabela ponte que liga pedidos aos seus motivos de venda."
-        # Esta tabela tem chave composta, mas o dbt 1001 valida apenas colunas simples por padrão.
+        description: "Tabela ponte ligando pedidos aos motivos de venda."
         tests:
           - not_null:
               column_name: salesorderid

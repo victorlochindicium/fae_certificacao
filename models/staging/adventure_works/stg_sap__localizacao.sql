@@ -13,7 +13,8 @@ with source_address as (
         cast(a.addressid as int) as id_endereco
         , cast(a.city as string) as nome_cidade
         , cast(s.name as string) as nome_estado
-        , cast(c.name as string) as nome_pais
+        -- Se o nome do país vier nulo (como na Namíbia), tratamos aqui:
+        , coalesce(cast(c.name as string), 'N/A') as nome_pais
     from source_address a
     left join source_state s on a.stateprovinceid = s.stateprovinceid
     left join source_country c on s.countryregioncode = c.countryregioncode
