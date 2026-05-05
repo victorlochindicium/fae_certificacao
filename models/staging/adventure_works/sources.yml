@@ -1,0 +1,101 @@
+version: 2
+
+sources:
+  - name: adventure_works
+    database: fea_academy
+    schema: adventure_works
+    tables:
+      # Vendas
+      - name: sales_salesorderheader
+        description: "Cabeçalho das vendas (um registro por pedido)."
+        tests:
+          - unique:
+              column_name: salesorderid
+          - not_null:
+              column_name: salesorderid
+
+      - name: sales_salesorderdetail
+        description: "Detalhes dos itens de cada pedido (granularidade de produto)."
+        tests:
+          - unique:
+              column_name: salesorderdetailid
+          - not_null:
+              column_name: salesorderdetailid
+
+      # Produtos
+      - name: production_product
+        description: "Cadastro de produtos."
+        tests:
+          - unique:
+              column_name: productid
+          - not_null:
+              column_name: productid
+
+      # Clientes e Pessoas
+      - name: sales_customer
+        description: "Tabela de clientes da Adventure Works."
+        tests:
+          - unique:
+              column_name: customerid
+          - not_null:
+              column_name: customerid
+
+      - name: person_person
+        description: "Informações cadastrais de pessoas físicas."
+        tests:
+          - unique:
+              column_name: businessentityid
+          - not_null:
+              column_name: businessentityid
+
+      # Localização (Endereços)
+      - name: person_address
+        description: "Cadastro de endereços físicos."
+        tests:
+          - unique:
+              column_name: addressid
+          - not_null:
+              column_name: addressid
+
+      - name: person_stateprovince
+        description: "Estados e Províncias."
+        tests:
+          - unique:
+              column_name: stateprovinceid
+          - not_null:
+              column_name: stateprovinceid
+
+      - name: person_countryregion
+        description: "Países e Regiões."
+        tests:
+          - unique:
+              column_name: countryregioncode
+          - not_null:
+              column_name: countryregioncode
+
+      # Cartão de Crédito
+      - name: sales_creditcard
+        description: "Informações de cartões de crédito."
+        tests:
+          - unique:
+              column_name: creditcardid
+          - not_null:
+              column_name: creditcardid
+
+      # Motivos de Venda (Reason)
+      - name: sales_salesreason
+        description: "Nomes e tipos dos motivos de venda."
+        tests:
+          - unique:
+              column_name: salesreasonid
+          - not_null:
+              column_name: salesreasonid
+
+      - name: sales_salesorderheadersalesreason
+        description: "Tabela ponte que liga pedidos aos seus motivos de venda."
+        # Esta tabela tem chave composta, mas o dbt 1001 valida apenas colunas simples por padrão.
+        tests:
+          - not_null:
+              column_name: salesorderid
+          - not_null:
+              column_name: salesreasonid
