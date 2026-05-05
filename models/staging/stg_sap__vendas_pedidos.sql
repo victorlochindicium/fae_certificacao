@@ -7,6 +7,7 @@ with source_data as (
     select
         cast(salesorderid as int) as id_venda
         , cast(customerid as int) as id_cliente
+        , cast(salespersonid as int) as id_vendedor
         , cast(creditcardid as int) as id_cartao
         , cast(shiptoaddressid as int) as id_endereco_entrega
         , cast(orderdate as timestamp) as data_venda
