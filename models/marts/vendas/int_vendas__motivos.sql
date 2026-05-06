@@ -1,1 +1,0 @@
-select * from {{ ref('stg_sap__vendas_motivos') }}
